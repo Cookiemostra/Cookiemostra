@@ -84,19 +84,27 @@
     input::placeholder { color: #72767d; }
     #error-404 {
       position: absolute;
-      top: 50%;
+      bottom: 15%;                /* Ajuste aqui se quiser mais alto/baixo (ex: 10% ou 20%) */
       left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 24px;
+      transform: translateX(-50%);
+      font-size: 22px;
       font-weight: bold;
       color: #f04747;
       text-align: center;
       white-space: nowrap;
       opacity: 0;
-      z-index: 10;
       pointer-events: none;
       width: 90%;
       max-width: 600px;
+      transition: all 0.6s ease-in-out;
+    }
+    #error-404.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    #error-404.hidden {
+      opacity: 0;
+      transform: translateX(-50%) translateY(30px); /* desliza pra baixo ao sumir */
     }
     .typing { 
       overflow: hidden; 
@@ -114,14 +122,9 @@
       from, to { border-color: transparent }
       50% { border-color: #f04747; }
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in { animation: fadeIn 1s ease-out forwards; }
     @media (max-width: 500px) {
       .container { padding: 30px 20px; border-radius: 0; min-height: 100vh; }
-      #error-404 { font-size: 20px; }
+      #error-404 { font-size: 18px; bottom: 12%; }
     }
   </style>
 </head>
@@ -151,7 +154,7 @@
       </p>
     </div>
 
-    <div id="error-404">
+    <div id="error-404" class="hidden">
       <span class="typing">| • Erro 404 Ou ainda não disponível • |</span>
     </div>
   </div>
@@ -165,17 +168,22 @@
 
     function showError404() {
       const err = document.getElementById("error-404");
-      err.style.opacity = "1";
-      err.classList.add("fade-in");
-      setTimeout(hideError, 6000); // some depois de 6s
+      err.classList.remove("hidden");
+      err.classList.add("visible");
+
+      // Fica visível por 5 segundos e depois some
+      setTimeout(() => {
+        err.classList.remove("visible");
+        err.classList.add("hidden");
+      }, 3000);
     }
 
     function hideError() {
       const err = document.getElementById("error-404");
-      err.style.opacity = "0";
-      err.classList.remove("fade-in");
+      err.classList.remove("visible");
+      err.classList.add("hidden");
     }
   </script>
 
 </body>
-  </html>
+</html>
