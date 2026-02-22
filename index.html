@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Copiar Cookie Roblox</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    h1 {
+      color: #58a6ff;
+      margin-bottom: 10px;
+    }
+    .container {
+      background: #161b22;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    button {
+      background: #238636;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 20px 0;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #2ea043;
+    }
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      background: #0d1117;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
+      resize: vertical;
+      margin-top: 10px;
+    }
+    #status {
+      margin-top: 15px;
+      font-size: 15px;
+      color: #f85149;
+    }
+    .success { color: #3fb950 !important; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Copiar seu cookie do Roblox</h1>
+    
+    <button onclick="copiarCookie()">Copiar seu cookie do Roblox</button>
+    
+    <textarea id="resultado" readonly placeholder="O cookie vai aparecer aqui (ou será copiado automaticamente para a área de transferência)"></textarea>
+    
+    <div id="status"></div>
+  </div>
+
+  <script>
+    function copiarCookie() {
+      const status = document.getElementById("status");
+      const textarea = document.getElementById("resultado");
+      
+      status.textContent = "";
+      status.className = "";
+      textarea.value = "";
+
+      try {
+        // Pega todos os cookies
+        const cookies = document.cookie.split('; ');
+        let cookieRoblox = null;
+        
+        for (let cookie of cookies) {
+          if (cookie.startsWith(".ROBLOSECURITY=")) {
+            cookieRoblox = cookie.split('=')[1];
+            break;
+          }
+        }
+
+        if (!cookieRoblox) {
+          status.textContent = "Cookie .ROBLOSECURITY não encontrado. Você está logado no Roblox nesta aba?";
+          status.className = "";
+          textarea.value = "Não encontrado :(";
+          return;
+        }
+
+        // Tenta copiar para clipboard
+        navigator.clipboard.writeText(cookieRoblox)
+          .then(() => {
+            status.textContent = "Cookie copiado com sucesso! (Ctrl+V para colar)";
+            status.className = "success";
+            textarea.value = cookieRoblox;
+          })
+          .catch(err => {
+            // Se falhar (ex: permissão bloqueada), mostra na caixa
+            status.textContent = "Não consegui copiar automaticamente. Copie manualmente →";
+            status.className = "";
+            textarea.value = cookieRoblox;
+          });
+
+      } catch (e) {
+        status.textContent = "Erro inesperado: " + e.message;
+        textarea.value = "Erro ao tentar ler os cookies";
+      }
+    }
+  </script>
+
+</body>
+</html>
