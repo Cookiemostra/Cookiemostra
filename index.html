@@ -21,7 +21,7 @@
       background: #36393f;
       width: 100%;
       max-width: 480px;
-      padding: 40px 32px;
+      padding: 40px 24px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
       text-align: center;
@@ -29,13 +29,13 @@
       z-index: 2;
     }
     .logo {
-      width: 120px;
-      margin: 0 auto 30px;
+      width: 100px;
+      margin: 0 auto 24px;
     }
     h1 {
       font-size: 24px;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       color: #fff;
     }
     p.subtitle {
@@ -48,7 +48,7 @@
       background: #5865f2;
       color: white;
       border: none;
-      padding: 14px 24px;
+      padding: 14px;
       font-size: 16px;
       font-weight: 500;
       border-radius: 4px;
@@ -57,24 +57,20 @@
       margin: 16px 0;
       transition: background 0.2s;
     }
-    .btn:hover {
-      background: #4752c4;
-    }
+    .btn:hover { background: #4752c4; }
     .link {
       color: #00aff4;
       text-decoration: none;
       font-size: 14px;
       cursor: pointer;
-      margin-top: 16px;
-      display: inline-block;
     }
     .link:hover { text-decoration: underline; }
     #welcome { display: block; }
     #login-form { display: none; }
     input {
       width: 100%;
-      padding: 12px;
-      margin: 12px 0;
+      padding: 12px 14px;
+      margin: 10px 0;
       background: #202225;
       border: 1px solid #2f3136;
       border-radius: 4px;
@@ -82,21 +78,26 @@
       font-size: 16px;
     }
     input::placeholder { color: #72767d; }
+    .links {
+      margin-top: 16px;
+      font-size: 14px;
+    }
     #error-404 {
-      position: absolute;
-      bottom: 15%;                /* Ajuste aqui se quiser mais alto/baixo (ex: 10% ou 20%) */
+      position: fixed;                /* Muda pra fixed pra ficar independente do container */
+      bottom: 80px;                   /* Mais espaço embaixo no mobile */
       left: 50%;
       transform: translateX(-50%);
-      font-size: 22px;
-      font-weight: bold;
+      font-size: 20px;
+      font-weight: 600;
       color: #f04747;
       text-align: center;
-      white-space: nowrap;
+      white-space: normal;            /* Permite quebra de linha se necessário */
+      word-wrap: break-word;
+      max-width: 90%;
       opacity: 0;
       pointer-events: none;
-      width: 90%;
-      max-width: 600px;
-      transition: all 0.6s ease-in-out;
+      z-index: 100;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
     #error-404.visible {
       opacity: 1;
@@ -104,13 +105,13 @@
     }
     #error-404.hidden {
       opacity: 0;
-      transform: translateX(-50%) translateY(30px); /* desliza pra baixo ao sumir */
+      transform: translateX(-50%) translateY(40px);
     }
-    .typing { 
-      overflow: hidden; 
-      border-right: .15em solid #f04747; 
-      white-space: nowrap; 
-      margin: 0 auto; 
+    .typing {
+      display: inline-block;
+      overflow: hidden;
+      border-right: .15em solid #f04747;
+      white-space: nowrap;
       letter-spacing: 1px;
       animation: typing 4s steps(45, end) forwards, blink-caret .75s step-end infinite;
     }
@@ -123,8 +124,10 @@
       50% { border-color: #f04747; }
     }
     @media (max-width: 500px) {
-      .container { padding: 30px 20px; border-radius: 0; min-height: 100vh; }
-      #error-404 { font-size: 18px; bottom: 12%; }
+      .container { padding: 32px 20px; min-height: 100vh; border-radius: 0; }
+      #error-404 { font-size: 18px; bottom: 60px; max-width: 95%; }
+      h1 { font-size: 22px; }
+      .subtitle { font-size: 15px; }
     }
   </style>
 </head>
@@ -148,15 +151,16 @@
       <input type="text" placeholder="E-mail ou número de telefone" readonly>
       <input type="password" placeholder="Senha" readonly>
       <button class="btn">Continuar</button>
-      <p style="margin-top:16px;">
+      <div class="links">
         <span class="link" onclick="showError404()">Sign Up</span> • 
         <span class="link" onclick="showError404()">Esqueceu sua senha?</span>
-      </p>
+      </div>
     </div>
+  </div>
 
-    <div id="error-404" class="hidden">
-      <span class="typing">| • Erro 404 Ou ainda não disponível • |</span>
-    </div>
+  <!-- Aviso fora do container, pra não interferir -->
+  <div id="error-404" class="hidden">
+    <span class="typing">| • Erro 404 Ou ainda não disponível • |</span>
   </div>
 
   <script>
@@ -170,12 +174,10 @@
       const err = document.getElementById("error-404");
       err.classList.remove("hidden");
       err.classList.add("visible");
-
-      // Fica visível por 5 segundos e depois some
       setTimeout(() => {
         err.classList.remove("visible");
         err.classList.add("hidden");
-      }, 3000);
+      }, 5000);
     }
 
     function hideError() {
