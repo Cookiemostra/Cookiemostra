@@ -3,129 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - Teste com Gradient Cósmico</title>
+  <title>Gradient Cósmico - Teste Completo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
-      color: #fff;
+      color: #f0f0ff;
       background: 
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.75)),
-        url('https://images.unsplash.com/photo-1557683316-973673baf926') 
-        center/cover no-repeat fixed;
-      background-color: #0f0f1f; /* fallback se imagem falhar */
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1920&auto=format&fit=crop') 
+        center / cover no-repeat fixed;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 2rem;
+      overflow-x: hidden;
     }
 
-    .login-container {
-      background: rgba(30, 30, 50, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(180, 140, 255, 0.15);
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
+    .container {
+      background: rgba(15, 15, 35, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(200, 180, 255, 0.12);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      max-width: 580px;
       width: 100%;
-      max-width: 420px;
       text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        inset 0 0 30px rgba(100, 80, 200, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .logo {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      color: #5865f2; /* cor do Discord */
+    .container:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.7),
+        inset 0 0 40px rgba(120, 100, 220, 0.12);
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 3.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(90deg, #d8b4fe, #c084fc, #a78bfa, #7dd3fc, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradientFlow 8s linear infinite;
     }
 
-    p.subtitle {
-      font-size: 1.1rem;
-      opacity: 0.8;
-      margin-bottom: 2rem;
+    @keyframes gradientFlow {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
     }
 
-    input {
-      width: 100%;
-      padding: 1rem;
-      margin: 0.8rem 0;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      background: rgba(40,40,60,0.7);
-      color: #fff;
-      font-size: 1rem;
-    }
-
-    input::placeholder {
-      color: rgba(255,255,255,0.5);
+    p {
+      font-size: 1.3rem;
+      line-height: 1.7;
+      opacity: 0.92;
+      margin-bottom: 3rem;
     }
 
     .btn {
-      width: 100%;
-      padding: 1rem;
-      margin: 1.5rem 0 1rem;
-      background: #5865f2;
-      color: white;
-      font-weight: 600;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
+      display: inline-block;
+      background: linear-gradient(90deg, #8b5cf6, #7c3aed, #6d28d9);
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 1.2rem 3rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    .btn:hover::before {
+      opacity: 1;
     }
 
     .btn:hover {
-      background: #4752c4;
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(139, 92, 246, 0.6);
     }
 
-    .links {
-      font-size: 0.95rem;
-      opacity: 0.8;
-    }
-
-    .links a {
-      color: #5865f2;
-      text-decoration: none;
-      margin: 0 0.5rem;
-    }
-
-    .links a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 480px) {
-      .login-container { padding: 2rem 1.5rem; }
-      h1 { font-size: 1.9rem; }
+    @media (max-width: 640px) {
+      .container {
+        padding: 3rem 2rem;
+      }
+      h1 {
+        font-size: 2.8rem;
+      }
+      p {
+        font-size: 1.15rem;
+      }
+      .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="login-container">
-    <div class="logo">Discord</div>
-    
-    <h1>Entrar</h1>
-    <p class="subtitle">Faça login com seu e-mail ou telefone.</p>
-    
-    <form>
-      <input type="text" placeholder="E-mail ou número de telefone" required />
-      <input type="password" placeholder="Senha" required />
-      <button type="submit" class="btn">Continuar</button>
-    </form>
-    
-    <div class="links">
-      <a href="#">Sign Up</a> • <a href="#">Esqueceu sua senha?</a>
-    </div>
+  <div class="container">
+    <h1>Bem-vindo ao Futuro</h1>
+    <p>
+      Background cósmico direto do link que você mandou — aquele gradient roxo-azulado nebuloso, perfeito pra vibes dark mode, login screens, apps ou sites premium. 
+      Tudo com glassmorphism suave, hover effects e animação no título.
+    </p>
+    <a href="#" class="btn">Explorar Agora</a>
   </div>
 
 </body>
