@@ -32,6 +32,13 @@
       width: 100px;
       margin: 0 auto 24px;
     }
+    .login-art {
+      width: 100%;
+      max-height: 180px;
+      margin: 0 auto 24px;
+      border-radius: 8px;
+      object-fit: contain;
+    }
     h1 {
       font-size: 24px;
       font-weight: 600;
@@ -83,15 +90,15 @@
       font-size: 14px;
     }
     #error-404 {
-      position: fixed;                /* Muda pra fixed pra ficar independente do container */
-      bottom: 80px;                   /* Mais espaço embaixo no mobile */
+      position: fixed;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 20px;
       font-weight: 600;
       color: #f04747;
       text-align: center;
-      white-space: normal;            /* Permite quebra de linha se necessário */
+      white-space: normal;
       word-wrap: break-word;
       max-width: 90%;
       opacity: 0;
@@ -125,6 +132,7 @@
     }
     @media (max-width: 500px) {
       .container { padding: 32px 20px; min-height: 100vh; border-radius: 0; }
+      .login-art { max-height: 140px; margin: 0 auto 20px; }
       #error-404 { font-size: 18px; bottom: 60px; max-width: 95%; }
       h1 { font-size: 22px; }
       .subtitle { font-size: 15px; }
@@ -148,6 +156,10 @@
     <div id="login-form">
       <h1>Entrar</h1>
       <p class="subtitle">Faça login com seu e-mail ou telefone.</p>
+      
+      <!-- Imagem SVG adicionada aqui na parte do login -->
+      <img class="login-art" src="https://discord.com/assets/2d0fb76a3f1071751c2a.svg" alt="Discord Login Art">
+      
       <input type="text" placeholder="E-mail ou número de telefone" readonly>
       <input type="password" placeholder="Senha" readonly>
       <button class="btn">Continuar</button>
@@ -158,7 +170,7 @@
     </div>
   </div>
 
-  <!-- Aviso fora do container, pra não interferir -->
+  <!-- Aviso de erro fixo embaixo -->
   <div id="error-404" class="hidden">
     <span class="typing">| • Erro 404 Ou ainda não disponível • |</span>
   </div>
